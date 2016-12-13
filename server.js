@@ -7,6 +7,16 @@ let app = express()
 app.use(bodyParser.urlencoded({extended: true}))
 let MongoClient = mongodb.MongoClient
 
+// allows CORS
+app.use(function(req, res, next) 
+{
+  res.header("Access-Control-Allow-Origin", "*")
+  res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept")
+  next()
+})
+
+
+
 // start mongo & node servers
 let mongoURL = 'mongodb://sgfDBAdmin:mvfsgc@ds133358.mlab.com:33358/study_group_finder' // production (mongo lab) url 
 //let mongoURL = 'mongodb://localhost:27017/study_group_finder' // dev mongo url
