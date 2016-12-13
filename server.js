@@ -42,14 +42,27 @@ app.get('/groups', (req, res) =>
 	})	
 })
 
+// get group by name
+app.get('/groups/:name', (req, res) =>
+{
+	let tmp = db.collection('groups').findOne({name: req.params.name}, (err, doc) =>
+	{
+		if (err)
+			console.log(err)
+		res.json(doc)
+		console.log(doc)
+	})
+	console.log("tmp", tmp)
+	console.log("id: ", req.params._id)
+	console.log("name", req.params.name)
+})
+
 
 // add group - requires name, class, createdBy, meetingTime(s)
 app.post('/groups', (req, res) => 
 {
 	let group = req.body
 
-	console.log("group", group)
-	
 	if ( !group.name || !group.class || !group.createdBy || !group.meetingTimes )
 		return res.status(500).send("Incorrect format for new group")
 
@@ -85,6 +98,38 @@ app.post('/groups', (req, res) =>
 	})
 })
 
+// add user - requires name, email, password)
+app.post('/', (req, res) => 
+{
+	let user = req.body
+
+	if ( !user.name || !user.email || !user.password )
+		return res.status(500).send("Incorrect format for new user")
+
+
+	// generate appropriate fields for user
+	user.gravatar = "gravatar" + ( Math.floor( Math.random() * 5 ) + 1 ) // 1-5
+	user.lastActivityAt = new Date()
+	user.createdAt = user.lastActivityAt
+
+	user = 
+	{	
+		name: user.name, 
+		email: user.email,
+		password: user.password,
+		gravatar: user.gravatar,
+		lastActivityAt: user.lastActivityAt,
+		createdAt: user.createdAt
+	}
+
+	db.collection('users').insert(user, (err, result) => 
+	{
+		if (err) 
+			return console.log(err)	
+		console.log('saved user to database')
+		res.sendStatus(200) // send 200 OK status on success
+	})
+})
 
 
 
