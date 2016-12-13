@@ -1,0 +1,24 @@
+{
+  "name": "sgf_node",
+  "version": "1.0.0",
+  "description": "Study Group Finder Node App",
+  "main": "server.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/allenwhitedev/SGF_Node.git"
+  },
+  "author": "Allen White",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/allenwhitedev/SGF_Node/issues"
+  },
+  "homepage": "https://github.com/allenwhitedev/SGF_Node#readme",
+  "dependencies": {
+    "body-parser": "^1.15.2",
+    "express": "^4.14.0",
+    "mongodb": "^2.2.15"
+  }
+}
