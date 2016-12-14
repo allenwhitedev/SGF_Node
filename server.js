@@ -122,14 +122,14 @@ app.patch('/groups/:groupId', (req, res) =>
 		})
 })
 
-// add user - requires name, email, password)
+// create user - requires name, email, password)
 app.post('/', (req, res) => 
 {
+	console.log('attempt create user')
 	let user = req.body
 
 	if ( !user.name || !user.email || !user.password )
 		return res.status(500).send("Incorrect format for new user")
-
 
 	// generate appropriate fields for user
 	user.gravatar = "gravatar" + ( Math.floor( Math.random() * 5 ) + 1 ) // 1-5
@@ -142,6 +142,7 @@ app.post('/', (req, res) =>
 		email: user.email,
 		password: user.password,
 		gravatar: user.gravatar,
+		reminders: [],
 		lastActivityAt: user.lastActivityAt,
 		createdAt: user.createdAt
 	}
@@ -151,7 +152,7 @@ app.post('/', (req, res) =>
 		if (err) 
 			return console.log(err)	
 		console.log('saved user to database')
-		res.status(200).send(result) // send user info to client on success
+		res.status(200).send(user) // send user info to client on success
 	})
 })
 
