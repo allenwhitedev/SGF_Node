@@ -1,22 +1,22 @@
-# SGF_Node, NodeJS App for Study Group Finder (CEN4010 FAU Project)
+SGF_Node, NodeJS App for Study Group Finder (CEN4010 FAU Project)
 
-# Routes (return JSON)
+# Routes/Endpoints (return JSON)
 
-GET /
-# Returns test message "SGF home page"
+# GET /
+Returns test message "SGF home page"
 
-GET /groups
-# Returns all groups
+# GET /groups
+Returns all groups
 
-GET /groups/:groupId
-# Gets group by id
+# GET /groups/:groupId
+Gets group by id
 
-POST /groups with body {name: "", class: "", createdBy: "", meetingTimes: [""]}
-# Creates new group with body & server attributes
+# POST /groups with body {name: "", class: "", createdBy: "", meetingTimes: [""]}
+Creates new group with body & server attributes
 
-PATCH /groups/:groupID body {userId: ""}
-# Joins group with user matching userId
+#PATCH /groups/:groupID body {userId: ""}
+Joins group with user matching userId
 
-POST / with body {name, email, password}
-# Creates user, returns user info
+# POST / with body {name, email, password}
+Creates user, returns user info
 
