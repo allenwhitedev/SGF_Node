@@ -6,6 +6,7 @@ let bodyParser = require('body-parser')
 let app = express()
 app.use(bodyParser.urlencoded({extended: true}))
 let MongoClient = mongodb.MongoClient
+let ObjectId = require('mongodb').ObjectID
 
 // allows CORS
 app.use(function(req, res, next) 
@@ -106,6 +107,21 @@ app.post('/groups', (req, res) =>
 		console.log('saved group to database')
 		res.sendStatus(200) // send 200 OK status on success
 	})
+})
+
+app.patch('/groups/:groupId', (req, res) =>
+{
+	console.log('req.params.groupId', req.params.groupId)
+	console.log('req.body.userId', req.body.userId)
+
+	let tmp = db.collection('groups').update({_id: ObjectId(req.params.groupId) }, 
+		{$addToSet: {members: req.body.userId} }, 
+		(err, result) => 
+		{
+			if (err)
+				console.log(err)
+			res.status(200).send(result)
+		})
 })
 
 // add user - requires name, email, password)
