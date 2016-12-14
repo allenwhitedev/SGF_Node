@@ -34,7 +34,7 @@ MongoClient.connect(mongoURL, (err, database) =>
 		console.log("SGF Node App listening in", nodeEnvironment)) 
 })
 
-
+// get home page test message
 app.get('/', (req, res) =>
 {
 	res.type('text/plain')
@@ -54,18 +54,15 @@ app.get('/groups', (req, res) =>
 })
 
 // get group by name
-app.get('/groups/:name', (req, res) =>
+app.get('/groups/:groupId', (req, res) =>
 {
-	let tmp = db.collection('groups').findOne({name: req.params.name}, (err, doc) =>
-	{
-		if (err)
-			console.log(err)
-		res.json(doc)
-		console.log(doc)
-	})
-	console.log("tmp", tmp)
-	console.log("id: ", req.params._id)
-	console.log("name", req.params.name)
+	let tmp = db.collection('groups').findOne({_id: ObjectId(req.params.groupId)}, 
+		(err, doc) =>
+		{
+			if (err)
+				console.log(err)
+			res.json(doc)
+		})
 })
 
 
@@ -109,6 +106,7 @@ app.post('/groups', (req, res) =>
 	})
 })
 
+// join group
 app.patch('/groups/:groupId', (req, res) =>
 {
 	console.log('req.params.groupId', req.params.groupId)
@@ -153,7 +151,7 @@ app.post('/', (req, res) =>
 		if (err) 
 			return console.log(err)	
 		console.log('saved user to database')
-		res.sendStatus(200) // send 200 OK status on success
+		res.status(200).send(result) // send user info to client on success
 	})
 })
 
