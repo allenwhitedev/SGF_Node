@@ -106,12 +106,9 @@ app.post('/groups', (req, res) =>
 	})
 })
 
-// join group
-app.patch('/groups/:groupId', (req, res) =>
+// join group - requires userId
+app.post('/groups/:groupId', (req, res) =>
 {
-	console.log('req.params.groupId', req.params.groupId)
-	console.log('req.body.userId', req.body.userId)
-
 	let tmp = db.collection('groups').update({_id: ObjectId(req.params.groupId) }, 
 		{$addToSet: {members: req.body.userId} }, 
 		(err, result) => 
